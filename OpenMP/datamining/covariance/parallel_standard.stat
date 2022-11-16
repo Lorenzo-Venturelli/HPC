@@ -1,0 +1,14 @@
+
+ Performance counter stats for './covariance_acc' (5 runs):
+
+       9579.230155      task-clock (msec)         #    2.546 CPUs utilized            ( +-  0.11% )
+                86      context-switches          #    0.009 K/sec                    ( +- 22.09% )
+                 0      cpu-migrations            #    0.000 K/sec                  
+             1,113      page-faults               #    0.116 K/sec                    ( +- 11.22% )
+    14,162,980,044      cycles                    #    1.479 GHz                      ( +-  0.10% )
+     3,580,159,755      instructions              #    0.25  insn per cycle           ( +-  0.02% )
+   <not supported>      branches                                                    
+           592,167      branch-misses                                                 ( +-  1.11% )
+
+       3.762561427 seconds time elapsed                                          ( +-  0.30% )
+
