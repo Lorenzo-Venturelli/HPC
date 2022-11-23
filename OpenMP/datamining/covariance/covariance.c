@@ -68,12 +68,6 @@ void kernel_covariance(int m, int n,
 
 			mean[j] /= float_n;
 		}
-
-		// Finish to compute later
-		for(j = 0; j < _PB_M; j++)
-		{
-			mean[j] /= float_n;
-		}
 			
 		/* Center the column vectors. */
 		for (i = 0; i < _PB_N; i++)
