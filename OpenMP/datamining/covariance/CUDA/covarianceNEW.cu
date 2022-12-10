@@ -84,8 +84,7 @@ void covariance(
 	)
 { 
   
-  int i, j, j1, j2;
-	*float_n = 1.2;    
+  int i, j, j1, j2;   
    
 	for (i = 0; i < m; i++){
 		for (j = 0; j < n; j++){
@@ -141,15 +140,15 @@ __global__ void kernel_covariance(
 	)
 {
 	int row = threadIdx.x + blockIdx.x * blockDim.x;
-	int column = threadIdx.y + blockIdx.y * blockDim.y;
- 
-  d_mean[column] = 0;
+	int column = threadIdx.y + blockIdx.y * blockDim.y; 
+
 	if(row < m && column < n) {
  
     atomicadd(&d_mean[column], d_data[row * n + column]);
   	//d_mean[column] = d_mean[column] + d_data[row * n + column];  	
-    d_mean[column] = d_mean[column] / float_n;  
     
+    d_mean[column] /= float_n; 
+        
     d_data[row * n + column] -= d_mean[column];
     
     /*for(int j = row; j < m; j = j + 1){
@@ -158,7 +157,7 @@ __global__ void kernel_covariance(
 		  //symmat[j * m + row] = symmat[row * m + j];
 	  }*/
      
-     //__syncthreads();
+
      
    double sum = 0.0;    
    if(column>=row){
@@ -304,9 +303,7 @@ int main(int argc, char *argv[])
 	//gpuErrchk(cudaMallocManaged((void **)&symmat, sizeof(double) * M * M));
 	//gpuErrchk(cudaMallocManaged((void **)&correct, sizeof(double) * M * M));
 	//gpuErrchk(cudaMallocManaged((void **)&mean, sizeof(double) * n));
-    
-	/* Initialize array(s). */
-	init_array(m, n, &float_n, data);
+ 
  
   double *d_symmat, *d_mean, *d_data;
   gpuErrchk(cudaMalloc((void **)&d_symmat, sizeof(double) * n * n));
@@ -338,13 +335,13 @@ int main(int argc, char *argv[])
   gpuErrchk(cudaMemcpy(mean, d_mean, sizeof(double) * n, cudaMemcpyDeviceToHost));
   
   int counter = 0;
-  for (int i = 0; i<m*n; i++){
-    //if(data[i] != data_correct[i]) counter += 1;
-    //printf("%.2f\n", symmat[i]);
+  for (int i = 0; i<m; i++){
+    //if(mean[i] != mean_correct[i]) counter += 1;
+    printf("%.2f\n", mean[i]);
     //printf("%.2f\n", symmat_correct[i]);
     }
     
-  //printf("%d", m*n);  
+  printf("%d", counter);  
     
 	gpuErrchk(cudaFree(data));
   gpuErrchk(cudaFree(d_symmat));
