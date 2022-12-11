@@ -6,6 +6,10 @@ ifndef EXERCISE
 EXERCISE=exercise1.cu
 endif
 
+ifndef DATASET
+DATASET = STANDARD_DATASET
+endif
+
 BUILD_DIR ?= ./build
 
 NVCC=$(CUDA_HOME)/bin/nvcc

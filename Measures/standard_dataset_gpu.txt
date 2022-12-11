@@ -1,0 +1,42 @@
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z12covax_kerneliPdS_' for 'sm_53'
+ptxas info    : Function properties for _Z12covax_kerneliPdS_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 31 registers, 344 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z13center_kerneliPdS_' for 'sm_53'
+ptxas info    : Function properties for _Z13center_kerneliPdS_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 10 registers, 344 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z11mean_kernelidPdS_' for 'sm_53'
+ptxas info    : Function properties for _Z11mean_kernelidPdS_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 22 registers, 352 bytes cmem[0], 32 bytes cmem[2]
+/usr/bin/ld: warning: /usr/ext/pkgs/llvm/11.0.0/libexec/../lib/libgomp.so: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0000000
+/usr/bin/ld: warning: /usr/ext/pkgs/llvm/11.0.0/libexec/../lib/libgomp.so: unsupported GNU_PROPERTY_TYPE (5) type: 0xc0000000
+Dataset size: 1000
+==30240== NVPROF is profiling process 30240, command: ./covariance.exe
+==30240== Warning: Unified Memory Profiling is not supported on the underlying platform. System requirements for unified memory can be found at: http://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-requirements
+Covariance (HOST):     3.810 sec       0.5 GFLOPS
+Covariance (GPU):     1.384 sec       1.4 GFLOPS
+Mean errors: 0
+Non-matching CPU - GPU outputs: 0
+==30240== Profiling application: ./covariance.exe
+==30240== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   97.42%  1.35938s         1  1.35938s  1.35938s  1.35938s  covax_kernel(int, double*, double*)
+                    1.58%  22.088ms         1  22.088ms  22.088ms  22.088ms  mean_kernel(int, double, double*, double*)
+                    0.61%  8.5068ms         2  4.2534ms  2.0310us  8.5048ms  [CUDA memcpy DtoH]
+                    0.26%  3.6486ms         1  3.6486ms  3.6486ms  3.6486ms  [CUDA memcpy HtoD]
+                    0.12%  1.7406ms         1  1.7406ms  1.7406ms  1.7406ms  center_kernel(int, double*, double*)
+      API calls:   80.42%  1.38333s         1  1.38333s  1.38333s  1.38333s  cudaDeviceSynchronize
+                   18.66%  320.93ms         3  106.98ms  710.22us  315.40ms  cudaMalloc
+                    0.86%  14.748ms         3  4.9159ms  112.14us  10.486ms  cudaMemcpy
+                    0.04%  643.40us         3  214.47us  159.64us  276.72us  cudaFree
+                    0.02%  319.49us         3  106.50us  75.158us  168.49us  cudaLaunchKernel
+                    0.01%  149.84us        96  1.5600us  1.0420us  24.636us  cuDeviceGetAttribute
+                    0.00%  8.0730us         3  2.6910us  1.4590us  4.4790us  cuDeviceGetCount
+                    0.00%  6.5100us         1  6.5100us  6.5100us  6.5100us  cuDeviceTotalMem
+                    0.00%  3.3850us         2  1.6920us  1.3540us  2.0310us  cuDeviceGet
+                    0.00%  1.9270us         1  1.9270us  1.9270us  1.9270us  cuDeviceGetName
+                    0.00%  1.6150us         1  1.6150us  1.6150us  1.6150us  cudaPeekAtLastError
+                    0.00%  1.3550us         1  1.3550us  1.3550us  1.3550us  cuDeviceGetUuid
